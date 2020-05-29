@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FAFDFE58-C09C-4644-A82D-600BDB3E01D8}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ShoppingCartKata</RootNamespace>
-    <AssemblyName>ShoppingCartKata</AssemblyName>
+    <ProjectGuid>{D77EFFBD-C3BE-4253-B5D2-54BBB51EB485}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ShoppingCartKata.Lib</RootNamespace>
+    <AssemblyName>ShoppingCartKata.Lib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,17 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Entities\Discount.cs" />
+    <Compile Include="Entities\IDiscount.cs" />
+    <Compile Include="Entities\IProduct.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ShoppingCartKata.Lib\ShoppingCartKata.Lib.csproj">
-      <Project>{d77effbd-c3be-4253-b5d2-54bbb51eb485}</Project>
-      <Name>ShoppingCartKata.Lib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

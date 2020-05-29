@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckOut.cs" />
     <Compile Include="Entities\Discount.cs" />
     <Compile Include="Entities\IDiscount.cs" />
     <Compile Include="Entities\IProduct.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="ICheckOut.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

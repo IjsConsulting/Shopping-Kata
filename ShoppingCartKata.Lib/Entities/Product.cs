@@ -2,6 +2,9 @@
 
 namespace ShoppingCartKata.Lib.Entities
 {
+    /// <summary>
+    /// Represents a Product Entity
+    /// </summary>
     public class Product : IProduct
     {
         public Product(string sku, decimal unitPrice)
@@ -14,8 +17,14 @@ namespace ShoppingCartKata.Lib.Entities
             UnitPrice = unitPrice;
         }
 
+        /// <summary>
+        /// The Stock Keeping Unit (SKU) identifier.
+        /// </summary>
         public string SKU { get; }
 
+        /// <summary>
+        /// The unit price of the product
+        /// </summary>
         public decimal UnitPrice { get; } = 0.0m;
     }
 }

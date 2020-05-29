@@ -2,6 +2,9 @@
 
 namespace ShoppingCartKata.Lib.Entities
 {
+    /// <summary>
+    /// Represents a Dicsount Entity
+    /// </summary>
     public class Discount : IDiscount
     {
         public Discount(string sku, int quantity, decimal offerPrice)
@@ -17,10 +20,19 @@ namespace ShoppingCartKata.Lib.Entities
             OfferPrice = offerPrice;
         }
 
+        /// <summary>
+        /// The Stock Keeping Unit (SKU)
+        /// </summary>
         public string SKU { get; }
 
+        /// <summary>
+        /// Discount Quantity
+        /// </summary>
         public int Quantity { get; } = 0;
 
+        /// <summary>
+        /// The Price at which the discount is offered.
+        /// </summary>
         public decimal OfferPrice { get; } = 0.0m;
     }
 }

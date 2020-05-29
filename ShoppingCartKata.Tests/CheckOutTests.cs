@@ -49,7 +49,241 @@ namespace ShoppingCartKata.Lib.Tests
 
         #endregion
 
-        #region Privation functions
+        #region Scan Tests
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Scan_WithInvalidSku_ThrowsException()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A01");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Scan_WithNullSku_ThrowsException()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Scan_WithEmptyStringSku_ThrowsException()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan(string.Empty);
+        }
+
+        [TestMethod]
+        public void Scan_AddSingleItem_TotalIsCorrect()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+
+            //Assert.
+            Assert.AreEqual(0.5m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddTwoSameItems_TotalIsCorrect()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+
+            //Assert.
+            Assert.AreEqual(1.0m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddTwoDifferentItems_TotalIsCorrect()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("B15");
+
+            //Assert.
+            Assert.AreEqual(0.8m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddThreeDifferentItems_TotalIsCorrect()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("B15");
+            checkOut.Scan("C40");
+
+            //Assert.
+            Assert.AreEqual(1.4m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddFourSameItemsWithNoDiscountApplied_TotalIsCorrect()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = new List<IDiscount>();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+
+            //Assert.
+            Assert.AreEqual(2.0m, checkOut.Total());
+        }
+
+        #endregion
+
+        #region Discount Tests
+
+        [TestMethod]
+        public void Scan_AddItemsThatQualifyForDiscount_DiscountAppliedToTotal()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+
+            //Assert.
+            Assert.AreEqual(1.3m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddFourItemsThatQualifyForDiscount_DiscountAppliedToTotal()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+
+            //Assert.
+            Assert.AreEqual(1.8m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddItemsWithDiscountAndOtherItem_DiscountAppliedToTotal()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("B15");
+
+            //Assert.
+            Assert.AreEqual(1.6m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddTwoItemsWithDiscount_DiscountAppliedToTotal()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("B15");
+            checkOut.Scan("B15");
+
+            //Assert.
+            Assert.AreEqual(1.75m, checkOut.Total());
+        }
+
+        [TestMethod]
+        public void Scan_AddTwoItemsWithDiscountAndOneNonDiscount_DiscountAppliedToTotal()
+        {
+            //Arrange
+            var products = GetProducts();
+            var discounts = GetDiscounts();
+
+            var checkOut = new CheckOut(products, discounts);
+
+            //Act
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("A99");
+            checkOut.Scan("B15");
+            checkOut.Scan("B15");
+            checkOut.Scan("C40");
+
+            //Assert.
+            Assert.AreEqual(2.35m, checkOut.Total());
+        }
+
+        #endregion
+
+        #region Private functions
 
         private IEnumerable<IProduct> GetProducts()
         {

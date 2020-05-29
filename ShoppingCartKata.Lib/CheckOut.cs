@@ -50,7 +50,9 @@ namespace ShoppingCartKata.Lib
         /// <returns>Product Price.</returns>
         public decimal Total()
         {
-            throw new NotImplementedException();
+            var total = scannedSkus.Sum(sku => GetPrice(sku));
+            var totalDiscounts = discounts.Sum(discount => CalculateDiscount(discount));
+            return total - totalDiscounts;
         }
 
         /// <summary>
@@ -60,7 +62,10 @@ namespace ShoppingCartKata.Lib
         /// <returns>Discount amount</returns>
         private decimal CalculateDiscount(IDiscount discount)
         {
-            throw new NotImplementedException();
+            var scannedProductCount = scannedSkus.Count(sku => sku == discount.SKU);
+            var productPrice = GetPrice(discount.SKU);
+            var discountAmount = (discount.Quantity * productPrice) - discount.OfferPrice;
+            return (scannedProductCount / discount.Quantity) * discountAmount;
         }
 
         /// <summary>
@@ -70,7 +75,7 @@ namespace ShoppingCartKata.Lib
         /// <returns>Product price</returns>
         private decimal GetPrice(string sku)
         {
-            throw new NotImplementedException();
-        }        
+            return products.Single(x => x.SKU == sku).UnitPrice;
+        }
     }
 }
